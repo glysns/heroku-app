@@ -39,7 +39,7 @@ public class PublicResource {
 
 	}
 	@GetMapping(value = "/images/{img}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseBot images(@PathVariable("img") String img) throws IOException {
+	public BotImage images(@PathVariable("img") String img) throws IOException {
 		ResponseBot response = new ResponseBot();
 			String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/bot/image/")
@@ -48,7 +48,7 @@ public class PublicResource {
 		BotImage bimg = new BotImage();
 		bimg.setUri(uri);
 		response.setBody(bimg);
-    	return response;
+    	return bimg;
 
 	}
 	//se mudar esta linha, precisa mudar linha { .path("/bot/image/") } 
