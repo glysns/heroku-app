@@ -22,7 +22,7 @@ import digytal.java.exemplos.herokuapp.model.ResponseBot;
 public class PublicResource {
 	
 	@GetMapping(value = "/images", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseBot imgs() throws IOException {
+	public ResponseBot images() throws IOException {
 		ResponseBot response = new ResponseBot();
 		String [] imgs = {"1","2","3"};
     	List<String> body = new ArrayList();
@@ -37,9 +37,21 @@ public class PublicResource {
     	return response;
 
 	}
+	@GetMapping(value = "/images/{img}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseBot images(@PathVariable("img") String img) throws IOException {
+		ResponseBot response = new ResponseBot();
+		String [] imgs = {"1","2","3"};
+    		String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+			.path("/bot/image/")
+			.path(img+".jpeg")
+			.toUriString();
+		response.setBody(uri);
+    	return response;
+
+	}
 	//se mudar esta linha, precisa mudar linha { .path("/bot/image/") } 
 	@GetMapping(value = "/image/{img}", produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<byte[]> img(@PathVariable("img") String img) throws IOException {
+	public ResponseEntity<byte[]> image(@PathVariable("img") String img) throws IOException {
 		ClassPathResource resourceFile = new ClassPathResource(String.format("img/%s", img));
 		byte[] bytes = bytes(resourceFile.getInputStream());
 		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
