@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import digytal.java.exemplos.herokuapp.model.BotImage;
 import digytal.java.exemplos.herokuapp.model.ResponseBot;
 
 @RestController
@@ -40,12 +41,13 @@ public class PublicResource {
 	@GetMapping(value = "/images/{img}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseBot images(@PathVariable("img") String img) throws IOException {
 		ResponseBot response = new ResponseBot();
-		String [] imgs = {"1","2","3"};
-    		String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+			String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/bot/image/")
 			.path(img+".jpeg")
 			.toUriString();
-		response.setBody(uri);
+		BotImage bimg = new BotImage();
+		bimg.setUri(uri);
+		response.setBody(bimg);
     	return response;
 
 	}
